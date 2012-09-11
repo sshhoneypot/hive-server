@@ -1,0 +1,50 @@
+Hive Server Readme
+
+From the SSH Honeypot project
+By: Truecode Pty Ltd
+
+Please note, this package is in very early stages... still requires
+lots of finalising and tidying.
+
+Requires:
+libpq (postgresql-devel)
+
+Database:
+Use the Postgresql database script hive.sql
+createdb honeypot
+psql honeypot < hive.sql
+
+
+Compile:
+gcc -o hive hive.c -lpq
+
+Run:
+./hive -d {demon mode}
+./hive -h {help}
+
+Check in the source for the PQconnect:
+update with your db connection string.. if you have local TRUST
+authentication, the connection string will probably work
+
+To do:
+# Add configuration file with options:
+  port     {port to listen on}
+  listen   {ips to accept packets from}
+  database {database connection string} 
+  ** expecting to use local TRUST authentication, not storing a password here
+
+# Add options to send/receive blacklost from internation swarm
+
+# Escape strings used in database queries
+
+# Develop command set
+  2 character command identifier
+  char(5) is used as a field separator, 
+  char(0) terminates
+  ** 65 < host/username/password reporting packet
+  Command needed to check if host is blacklisted (to be used by sshd)
+  Commands also to replace current web based requests: password check, ip list
+
+# Server is to provide integer return values to the client before
+  dropping connection
+
